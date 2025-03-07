@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
-import SignupPage from './components/SignUpPage';
+import SignupPage from './components/SignupPage';
 import HabitsPage from './components/HabitsPage';
 import TodayPage from './components/TodayPage';
 import { useUser } from './UserContext.jsx';
