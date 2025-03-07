@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import TrackItLogo from '../assets/Logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ThreeDots } from 'react-loader-spinner'; // Ajuste aqui para importar corretamente
+import { ThreeDots } from 'react-loader-spinner';
+import { useUser } from '../UserContext.jsx'; // Importe o contexto
 
 // Styled components
 const Container = styled.div`
@@ -67,6 +68,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { setUser } = useUser(); // Obtenha a função setUser do contexto
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -80,11 +82,17 @@ const LoginPage = () => {
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
             .then(response => {
                 console.log(response.data);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('userId', response.data.id);
-                localStorage.setItem('userName', response.data.name);
-                localStorage.setItem('userImage', response.data.image);
 
+                // Armazene o usuário completo no Local Storage
+                const user = {
+                    token: response.data.token,
+                    id: response.data.id,
+                    name: response.data.name,
+                    image: response.data.image
+                };
+                localStorage.setItem('user', JSON.stringify(user)); // Armazene o usuário no Local Storage
+
+                setUser(user); // Atualize o contexto com o usuário logado
                 navigate('/today');
             })
             .catch(error => {
