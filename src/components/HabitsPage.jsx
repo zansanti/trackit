@@ -208,10 +208,9 @@ const DeleteButton = styled.button`
     cursor: pointer;
 `;
 
-// ... (imports e estilo permanecem os mesmos)
-
 const HabitsPage = () => {
-    const userImage = JSON.parse(localStorage.getItem('user'))?.image;
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user ? user.token : null; // Recuperando o token do localStorage
     const [showForm, setShowForm] = useState(false);
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
@@ -225,7 +224,7 @@ const HabitsPage = () => {
                 const response = await fetch('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Authorization': `Bearer ${token}`, // Usando o token recuperado
                     }
                 });
 
@@ -241,7 +240,7 @@ const HabitsPage = () => {
         };
 
         fetchHabits();
-    }, []);
+    }, [token]); // Adicionando o token como dependência
 
     const toggleDay = (day) => {
         if (selectedDays.includes(day)) {
@@ -279,7 +278,7 @@ const HabitsPage = () => {
             const response = await fetch('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`, // Usando o token recuperado
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(newHabit)
@@ -308,7 +307,7 @@ const HabitsPage = () => {
             const response = await fetch(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${habitId}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Authorization': `Bearer ${token}`, // Usando o token recuperado
                 }
             });
 
@@ -330,7 +329,7 @@ const HabitsPage = () => {
             <Container>
                 <HeaderBar>
                     <LogoText>TrackIt</LogoText>
-                    <UserImage src={userImage} alt="Perfil do usuário" />
+                    <UserImage src={user.image} alt="Perfil do usuário" />
                 </HeaderBar>
                 <Content>
                     <TitleRow>
