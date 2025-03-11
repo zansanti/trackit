@@ -211,7 +211,7 @@ const DeleteButton = styled.button`
 // ... (imports e estilo permanecem os mesmos)
 
 const HabitsPage = () => {
-    const userImage = localStorage.getItem('userImage');
+    const userImage = JSON.parse(localStorage.getItem('user'))?.image;
     const [showForm, setShowForm] = useState(false);
     const [habitName, setHabitName] = useState('');
     const [selectedDays, setSelectedDays] = useState([]);
