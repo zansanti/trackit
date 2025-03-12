@@ -65,13 +65,18 @@ const Title = styled.h2`
 `;
 
 const HabitCard = styled.div`
-    background-color: white;
+    background-color: ${props => (props.done ? '#d4edda' : 'white')}; /* Preenchimento verde quando feito */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+`;
+
+const HabitInfo = styled.div`
+    flex: 1; /* Faz com que este div ocupe o espaço restante */
+    margin-right: 10px; /* Espaçamento entre o texto e o checkbox */
 `;
 
 const HabitName = styled.h3`
@@ -83,7 +88,13 @@ const HabitName = styled.h3`
 const Stats = styled.p`
     font-size: 16px;
     color: #666666;
-    margin: 5px 0 0 0;
+    margin: 5px 0 0 0; /* Margem superior */
+`;
+
+const CheckContainer = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
 `;
 
 const Footer = styled.footer`
@@ -177,13 +188,15 @@ const TodayPage = () => {
                         <p>Você não tem hábitos para hoje!</p>
                     ) : (
                         habits.map((habit) => (
-                            <HabitCard key={habit.id}>
-                                <HabitName>{habit.name}</HabitName>
-                                <button onClick={() => toggleHabit(habit.id, habit.done)}>
+                            <HabitCard key={habit.id} done={habit.done}>
+                                <HabitInfo>
+                                    <HabitName>{habit.name}</HabitName>
+                                    <Stats>Sequência atual: {habit.currentSequence} dias</Stats>
+                                    <Stats>Seu recorde: {habit.highestSequence} dias</Stats>
+                                </HabitInfo>
+                                <CheckContainer onClick={() => toggleHabit(habit.id, habit.done)}>
                                     <BsCheck size={20} color={habit.done ? "green" : "grey"} />
-                                </button>
-                                <Stats>Sequência atual: {habit.currentSequence} dias</Stats>
-                                <Stats>Seu recorde: {habit.highestSequence} dias</Stats>
+                                </CheckContainer>
                             </HabitCard>
                         ))
                     )}

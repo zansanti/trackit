@@ -120,7 +120,7 @@ const HabitForm = styled.div`
 `;
 
 const Input = styled.input`
-    width: 100%;
+    width: 80%;
     height: 45px;
     background: #FFFFFF;
     border: 1px solid #D5D5D5;
@@ -132,18 +132,22 @@ const Input = styled.input`
 `;
 
 const WeekdaysContainer = styled.div`
-    display: flex;
-    gap: 4px;
+   display: flex;
+    justify-content: center; /* Centraliza os botões horizontalmente */
+    gap: 4px; /* Espaçamento entre os botões */
     margin-bottom: 29px;
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 100%; /* Garante que o container não ultrapasse a largura do pai */
 `;
 
 const WeekdayButton = styled.button`
-    width: 30px;
-    height: 30px;
+    width: 25px; /* Ajuste a largura conforme necessário */
+    height: 25px; /* Ajuste a altura conforme necessário */
     background: ${props => props.selected ? '#CFCFCF' : '#FFFFFF'};
     border: 1px solid ${props => props.selected ? '#52B6FF' : '#D5D5D5'};
     border-radius: 5px;
-    font-size: 19.976px;
+    font-size: 14px; /* Ajuste o tamanho da fonte se necessário */
     color: ${props => props.selected ? '#FFFFFF' : '#DBDBDB'};
     cursor: pointer;
     display: flex;
@@ -194,6 +198,7 @@ const HabitName = styled.h3`
     font-size: 20px;
     color: #666666;
     margin: 0;
+    margin-right: 20px;
 `;
 
 const DaysContainer = styled.div`
