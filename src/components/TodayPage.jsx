@@ -65,7 +65,7 @@ const Title = styled.h2`
 `;
 
 const HabitCard = styled.div`
-    background-color: ${props => (props.done ? '#d4edda' : 'white')}; /* Preenchimento verde quando feito */
+    background-color: ${props => (props.$isDone ? '#d4edda' : 'white')}; /* Preenchimento verde quando feito */
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -120,16 +120,20 @@ const TodayPage = () => {
 
     useEffect(() => {
         const fetchTodayHabits = async () => {
+            const token = localStorage.getItem('token'); // Obtém o token
+            console.log("Token:", token); // Verifica o token no console
+
             try {
                 const response = await fetch('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`, // Certifique-se de que o token está armazenado
+                        'Authorization': `Bearer ${token}`, // Certifique-se de que o token está armazenado
                     }
                 });
 
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("Dados dos hábitos:", data); // Verifica os dados retornados
                     setHabits(data); // Atualiza o estado com os hábitos de hoje
                 } else {
                     console.error('Erro ao buscar hábitos de hoje:', response.statusText);
@@ -188,7 +192,7 @@ const TodayPage = () => {
                         <p>Você não tem hábitos para hoje!</p>
                     ) : (
                         habits.map((habit) => (
-                            <HabitCard key={habit.id} done={habit.done}>
+                            <HabitCard key={habit.id} $isDone={habit.done}> {/* Usando $isDone */}
                                 <HabitInfo>
                                     <HabitName>{habit.name}</HabitName>
                                     <Stats>Sequência atual: {habit.currentSequence} dias</Stats>
