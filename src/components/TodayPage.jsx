@@ -117,12 +117,13 @@ const FooterButton = styled(Link)`
 
 const TodayPage = () => {
     const [habits, setHabits] = useState([]); // Estado para armazenar os hábitos de hoje
+    const user = JSON.parse(localStorage.getItem('user')); // Obtém o usuário
+    const token = user ? user.token : null; // Acessa o token diretamente do objeto
+    const userImage = user ? user.image : null; // Acessa a imagem do usuário
 
     useEffect(() => {
         const fetchTodayHabits = async () => {
-            const token = localStorage.getItem('token'); // Obtém o token
             console.log("Token:", token); // Verifica o token no console
-            const userImage = localStorage.getItem('userImage'); // Obtém a imagem do usuário
             console.log("Imagem do usuário:", userImage); // Verifica a imagem do usuário
 
             try {
@@ -146,7 +147,7 @@ const TodayPage = () => {
         };
 
         fetchTodayHabits(); // Chama a função ao montar o componente
-    }, []); // O array vazio significa que isso só será executado uma vez
+    }, [token]); // O token é uma dependência
 
     const today = dayjs(); // Usando Day.js para a data atual
     const dayMonth = today.format('DD/MM'); // Formata a data como "DD/MM"
@@ -161,7 +162,7 @@ const TodayPage = () => {
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`, // Certifique-se de que o token está armazenado
+                    'Authorization': `Bearer ${token}`, // Certifique-se de que o token está armazenado
                 }
             });
 
@@ -186,7 +187,7 @@ const TodayPage = () => {
             <Container>
                 <HeaderBar>
                     <LogoText>TrackIt</LogoText>
-                    <UserImage src={localStorage.getItem('userImage')} alt="Perfil do usuário" />
+                    <UserImage src={userImage} alt="Perfil do usuário" /> {/* Usando a imagem do usuário */}
                 </HeaderBar>
                 <Content>
                     <Title>{`${dayName.charAt(0).toUpperCase() + dayName.slice(1)}, ${dayMonth}`}</Title>
