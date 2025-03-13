@@ -81,7 +81,7 @@ const LoginPage = () => {
 
         axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
             .then(response => {
-                console.log(response.data);
+                console.log(response.data); // Verifique a resposta da API
 
                 // Armazene o usuário completo no Local Storage
                 const user = {
@@ -91,6 +91,8 @@ const LoginPage = () => {
                     image: response.data.image
                 };
                 localStorage.setItem('user', JSON.stringify(user)); // Armazene o usuário no Local Storage
+
+                console.log("Usuário armazenado:", localStorage.getItem('user')); // Verifique se o usuário foi armazenado corretamente
 
                 setUser(user); // Atualize o contexto com o usuário logado
                 navigate('/today');
