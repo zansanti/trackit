@@ -122,6 +122,8 @@ const TodayPage = () => {
         const fetchTodayHabits = async () => {
             const token = localStorage.getItem('token'); // Obtém o token
             console.log("Token:", token); // Verifica o token no console
+            const userImage = localStorage.getItem('userImage'); // Obtém a imagem do usuário
+            console.log("Imagem do usuário:", userImage); // Verifica a imagem do usuário
 
             try {
                 const response = await fetch('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today', {
